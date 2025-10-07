@@ -1,0 +1,13 @@
+{
+  "itemGroup.cljmlexamplemod": "Example Mod Tab",
+  "block.cljmlexamplemod.example_block": "Example Block",
+  "item.cljmlexamplemod.example_item": "Example Item",
+
+  "cljmlexamplemod.configuration.title": "cljml-example-mod Configs",
+  "cljmlexamplemod.configuration.section.cljmlexamplemod.common.toml": "cljml-example-mod Configs",
+  "cljmlexamplemod.configuration.section.cljmlexamplemod.common.toml.title": "cljml-example-mod Configs",
+  "cljmlexamplemod.configuration.items": "Item List",
+  "cljmlexamplemod.configuration.logDirtBlock": "Log Dirt Block",
+  "cljmlexamplemod.configuration.magicNumberIntroduction": "Magic Number Text",
+  "cljmlexamplemod.configuration.magicNumber": "Magic Number"
+}
