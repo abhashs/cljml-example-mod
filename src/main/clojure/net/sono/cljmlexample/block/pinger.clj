@@ -20,7 +20,6 @@
 
 
 (defblock pinger-block
-  "A block that does something when right-clicked on."
   :override {:useItemOn (fn [this stack bs level pos player hand hit-result]
                           (use-pinger level player hand)
                           ItemInteractionResult/SUCCESS)}
