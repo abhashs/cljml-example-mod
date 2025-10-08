@@ -25,9 +25,6 @@ base {
     archivesName = mod_id
 }
 
-//apply plugin: 'dev.clojurephant.clojure'
-//apply plugin: 'com.github.johnrengelman.shadow'
-
 // Mojang ships Java 21 to end users in 1.21.1, so mods should target Java 21.
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
@@ -111,15 +108,17 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 // a dependency that will be present for runtime testing but that is
 // "optional", meaning it will not be pulled by dependents of this mod.
 configurations {
-    runtimeClasspath.extendsFrom localRuntime
+    additionalRuntimeClasspath
+    runtimeClasspath.extendsFrom additionalRuntimeClasspath
 }
 
 jar {
     enabled = false
+//    from(file('build/clojure/main'))
 }
 
 //artifacts {
-//    archives shadowJar
+//    archives jarJar
 //}
 
 shadowJar {
@@ -131,8 +130,10 @@ shadowJar {
         include(dependency('net.sono:cljml'))
     }
 
-//    from sourceSets.main.output
+    from sourceSets.main.output
     from(file('build/clojure/main'))
+
+    mergeServiceFiles()
 }
 
 tasks.build.dependsOn(shadowJar)
@@ -143,10 +144,10 @@ dependencies {
     implementation 'org.clojure:core.specs.alpha:0.2.62'
     implementation "net.sono:cljml:1.0.0"
 
-//    additionalRuntimeClasspath 'org.clojure:clojure:1.12.0'
-//    additionalRuntimeClasspath 'org.clojure:tools.namespace:1.4.4'
-//    additionalRuntimeClasspath 'org.clojure:spec.alpha:0.3.218'
-//    additionalRuntimeClasspath 'org.clojure:core.specs.alpha:0.2.62'
+    additionalRuntimeClasspath 'org.clojure:clojure:1.12.0'
+    additionalRuntimeClasspath 'org.clojure:spec.alpha:0.3.218'
+    additionalRuntimeClasspath 'org.clojure:core.specs.alpha:0.2.62'
+    additionalRuntimeClasspath "net.sono:cljml:1.0.0"
 }
 
 clojure {
@@ -214,6 +215,7 @@ tasks.withType(JavaCompile).configureEach {
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
 idea {
     module {
+//        downloadSources = trueclasspath.from(configurations.runtimeClasspath)
         downloadSources = true
         downloadJavadoc = true
     }
@@ -223,5 +225,6 @@ sourceSets {
         clojure {
             srcDirs = ['src/main/clojure']
         }
+        compileClasspath += configurations.runtimeClasspath
     }
 }
